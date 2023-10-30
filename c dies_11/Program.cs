@@ -154,7 +154,7 @@ namespace c_dies_11
             //    f.Info();
             //}
 
-            string XmlString = "C:\\Users\\Ж - 6\\Documents\\Чеп\\books.xml";
+            string XmlString = "C:\\Users\\Ж - 6\\Documents\\Чеп\\c dies_11\\books.xml";
             XDocument doc = XDocument.Load(XmlString);
 
             var persons = from pe in doc.Descendants("book")
@@ -183,11 +183,15 @@ namespace c_dies_11
                 Console.WriteLine();
 
             }
-            //var selectedBooks1 = from s in persons.Where(selectedBooks => Convert.ToInt32(selectedBooks.year) < 1900).Select(selectedBooks => selectedBooks.Name);
+            persons = selectedBooks;
+            var selectedBooks1 = persons.Where(s => (Convert.ToInt32(s.year)) < 1900).Select(s=>s);
             //var selectedBooks = from s in persons
             //                    orderby s.title
             //                    select s;
-
+            foreach(var dd in selectedBooks1)
+            {
+                Console.WriteLine(dd.title);
+            }
         }
     }
 }
