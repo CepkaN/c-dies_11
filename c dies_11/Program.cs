@@ -185,12 +185,49 @@ namespace c_dies_11
             }
             persons = selectedBooks;
             var selectedBooks1 = persons.Where(s => (Convert.ToInt32(s.year)) < 1900).Select(s=>s);
-            //var selectedBooks = from s in persons
-            //                    orderby s.title
-            //                    select s;
+
+            Console.WriteLine("До 1900");
             foreach(var dd in selectedBooks1)
             {
                 Console.WriteLine(dd.title);
+            }
+
+            //var listOfbook = bookList.OrderBy(t => t.Title);
+            SortedSet<string> genres = new SortedSet<string>();
+
+            foreach (var book in selectedBooks)
+            {
+                genres.Add(book.genre);
+            }
+            Console.WriteLine("Количество книг по жанрам:");
+            foreach (string genre in genres)
+            {
+                Console.WriteLine("Количество книг в жанре " + genre + " равно " +
+                    (from i in selectedBooks where i.genre == genre select i).Count());
+            }
+            var oldAuthors = from b in selectedBooks1 where (Convert.ToInt32(b.year)) < 1900 select b;
+            Console.WriteLine("Список авторов с годом издания книг до 1900:");
+            foreach (var author in oldAuthors)
+            {
+                Console.WriteLine(author.author);
+            }
+            var twoBooksAuthors = from b in selectedBooks1 group b by b.author into res where res.Count() >= 2 select res;
+            Console.WriteLine("Список авторов у которых не менее 2-х книг:");
+            foreach (var author in twoBooksAuthors)
+            {
+                Console.WriteLine(author.First().author);
+            }
+            var longTitle = from b in selectedBooks1 where b.title.Contains(" ") select b;
+            Console.WriteLine("Количество книг с названиями, состоящими более чем из одного слова:" + longTitle.Count() + ", список этих книг:");
+            foreach (var author in longTitle)
+            {
+                Console.WriteLine(author.title);
+            }
+            var newAuthors = from b in selectedBooks1 where ((Convert.ToInt32(b.year)) > 1940 && (Convert.ToInt32(b.year)) < 2000) select b;
+            Console.WriteLine("Список авторов с годом издания книг между 1940 и 2000 годами:");
+            foreach (var author in newAuthors)
+            {
+                Console.WriteLine(author);
             }
         }
     }
